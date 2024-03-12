@@ -1,7 +1,7 @@
 library(magick)
 
 
-new < image_blank(400,400)
+new <- image_blank(400,400)
 
 
 
