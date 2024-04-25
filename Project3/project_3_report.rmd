@@ -1,0 +1,70 @@
+---
+title: "Project 3"
+subtitle: "STATS 220 Semester One 2024" 
+author: "Hrichik Sircar"
+date: "2024-04-24"
+output:
+  html_document:
+    code_folding: hide
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE, message=FALSE, warning=FALSE, error=FALSE)
+library(tidyverse)
+photo_data <- read_csv('selected_photos.csv')
+
+
+```
+
+```{css, echo=FALSE}
+body{
+  background-color:darkgrey; 
+}
+
+p{
+  padding: 15px; 
+}
+```
+
+## Introduction
+  The two words I chose were "Flying" and "Squirrel". The reason I chose these words is because in the project outline "cute       cats" was used as an example so I chose a different animal and chose an adjective. 
+
+  
+  ![The first few rows of the results from the search engine](Capture.JPG)
+  
+  <br>
+  
+  The photos tend to all be landscape photos. All of them tend to have primarily green and brown colours in them. All of them are   tagged with 'squirrel' and most of them are tagged with 'rodent'. The likes on the photos tend to vary from around 120 - 220     likes. The range on the number of views is quite large with half being around 110,000 and the other half having around 10,000. 
+
+```{R}
+
+
+selected_urls <- select(photo_data, pageURL)
+knitr::kable(selected_urls, caption = "Selected Photo URLs")
+
+```
+
+![GIF of all Selected Photos](my_photos.gif)
+
+## Key features of selected photos
+  1. On average there was a `r mean(photo_data$viewsvsdownloads) *100`% chance that if the person viewed the image they would         also download it. 
+
+  2. The chance that a person would leave a comment on a photo was `r mean(photo_data$viewsvscomments) *100`% on average. 
+
+  
+  
+  3. The average number of likes for the selected photos is `r mean(photo_data$likes) %>% round()`, indicating the level of           engagement they receive from viewers.
+  
+  4. The average number if views for the selected photos were `r format(mean(photo_data$views, na.rm = TRUE), scientific = FALSE)`
+  
+  
+## Creativityx
+
+```{r datatable_photo_data}
+
+
+# Display datatable of photo_data
+knitr::kable(photo_data, caption = "Photo Data Table")
+```
+## Learning reflection
+
