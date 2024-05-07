@@ -12,11 +12,13 @@ mid <- youtube_data %>%
   filter(channelName == ('@midbeast9495'))
 
 faker_data <- youtube_data %>%
-  mutate(faker = ifelse(str_detect(tolower(title), 'faker'),'Is in the Title', 'Is not in the Title'))
+  mutate(Faker = ifelse(str_detect(tolower(title), 'faker'),'Is in the Title', 'Is not in the Title'))
   
   
 faker_data %>% 
   ggplot() +
-  geom_point(aes(x = videoId, y = viewCount, 
-                 colour = faker)) 
+  geom_bar(aes(x = title, y = viewCount, fill = Faker), stat = "identity") +
+  labs(title = "View Count for Videos with 'Faker' in Title", x = "Videos", y = "View Count") +
+theme(axis.text.x = element_blank(), axis.ticks.x = element_blank())
+
 
