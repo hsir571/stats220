@@ -1,0 +1,22 @@
+library(tidyverse)
+
+
+
+youtube_data <- read.csv('https://docs.google.com/spreadsheets/d/e/2PACX-1vQKPXO2ualEZnThidWU7Lvz8xE2xHjO_fsc45OpvO5w0bFEn3paR-h6LsJ2IQnYdwaRvpd5Lfltiqm0/pub?gid=0&single=true&output=csv')
+
+
+iwd <- youtube_data %>%
+  filter(channelName == ('@IWDominatelol'))
+
+mid <- youtube_data %>%
+  filter(channelName == ('@midbeast9495'))
+
+faker_data <- youtube_data %>%
+  mutate(faker = ifelse(str_detect(tolower(title), 'faker'),'Is in the Title', 'Is not in the Title'))
+  
+  
+faker_data %>% 
+  ggplot() +
+  geom_point(aes(x = videoId, y = viewCount, 
+                 colour = faker)) 
+
