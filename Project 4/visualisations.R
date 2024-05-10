@@ -21,4 +21,21 @@ faker_data %>%
   labs(title = "View Count for Videos with 'Faker' in Title", x = "Videos", y = "View Count") +
 theme(axis.text.x = element_blank(), axis.ticks.x = element_blank())
 
+mean_comments <- youtube_data$commentCount %>%
+  mean() 
+  
+youtube_data %>%
+  ggplot() +
+  geom_point(aes(y = commentCount, x = videoId), colour = "red") +
+  labs(title = "Number of comments per video", x = "Videos", y = "Comment Count") +
+  theme(axis.text.x = element_blank(), axis.ticks.x = element_blank()) +
+  
+  geom_hline(yintercept = mean_comments, size = 1, colour = "blue") +
+  annotate("text", x = Inf, y = 0, label = "Average Number of Comments", hjust = 1, vjust = 1, color = "blue")
+
+
+
+
+new_data <- youtube_data %>%
+  mutate
 

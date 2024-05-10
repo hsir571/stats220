@@ -2,53 +2,21 @@ library(tidyverse)
 library(magick)
 library(jsonlite)
 
-#read json data into frame 
-json_data <- fromJSON("pixabay_data.json")
-pixabay_photo_data <- json_data$hits
+url1 <- "https://stat.auckland.ac.nz/~fergusson/stats220_S124/zoom_data/participants5.csv"
+url2 <- "https://stat.auckland.ac.nz/~fergusson/stats220_S124/zoom_data/participants1.csv"
 
-#filter photos down to around 50 and also create more variables 
-selected_photos <- pixabay_photo_data %>% 
-  separate_rows(tags, sep = ", ") %>%
-  filter(tags == 'rodent' & views > 10000 & downloads > 15000)%>%
-  mutate(popular = ifelse(views > 100000, 'very popular', 'not that popular'))%>%
-  mutate(viewsvsdownloads = (downloads / views)) %>%
-  mutate(viewsvscomments = comments / views)
+data1 <- read_csv(url1)
+data2 <- read_csv(url2)
 
-#saves as CSV 
-write_csv(selected_photos, "selected_photos.csv")
+students <- data1$private_name %>%
+  unique()
 
+all_data <- bind_rows(data1, data2)
 
-mean_likes <- selected_photos$likes %>% mean(na.rm = TRUE)
-mean_views <- selected_photos$views %>% mean(na.rm = TRUE)
-mean_comments <- selected_photos$comments %>% mean(na.rm = TRUE)
+all_data$duration_minutes %>%
+  mean() %>%
+  round(digits = 1)
 
-selected_photos %>%
-  group_by(popular) %>%
-  summarise(mean_likes = mean(likes))
-
-selected_photos %>%
-  group_by(popular) %>%
-  summarise(mean_views = mean(views))
-
-selected_photos %>%
-  group_by(popular) %>%
-  summarise(mean_comments = mean(comments))
-
-  # Initialize an empty list to store resized images
-  images <- list()
-  
-  # Loop through each URL in selected_photos$previewURL
-  for (url in selected_photos$previewURL) {
-    # Read and resize each image
-    img <- image_read(url)
-    img_resized <- image_resize(img, "300x300")
-    # Add the resized image to the list
-    images <- c(images, list(img_resized))
-  }
-  
-  # Combine images into an animated GIF
-  animated_gif <- image_animate(image_join(images), fps = 5)
-  
-  # Save the animated GIF
-  image_write(animated_gif, "my_photos.gif")
-  
+grouped_data <- all_data %>%
+  group_by(date_lecture, in_waiting_room) %>%
+  summarise(num = n())
