@@ -9,14 +9,6 @@
 - Markdown 
 
 
-**My favourite things to do in order would be:**
-
-1. Sleep
-2. Drink
-3. Play video games
-4. Procrastinate using [Youtube](https://www.youtube.com/)
-
-
 [**Check out some of the projects I have worked on in the past in my Github**](https://github.com/hsir571/hsir571.github.io)
 
 
